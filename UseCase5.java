@@ -1,2 +1,48 @@
-public class UseCase5 g{
+import java.util.LinkedList;
+import java.util.Queue;
+public class UseCase5 {
+    static class Reservation{
+        private String  guestName;
+        private String roomType;
+        public Reservation(String guestName,String roomType){
+            this.guestName=guestName;
+            this.roomType=roomType;
+        }
+        public String getGuestName(){
+            return guestName;
+        }
+        public String getRoomType(){
+            return roomType;
+        }
+    }
+    static class BookingRequestQueue{
+        private Queue<Reservation> requestQueue;
+        public BookingRequestQueue(){
+            requestQueue=new LinkedList<>();
+        }
+        public void addRequest(Reservation reservation){
+            requestQueue.offer(reservation);
+        }
+        public Reservation getnextRequest(){
+            return requestQueue.poll();
+        }
+        public boolean haspendingRequests(){
+            return !requestQueue.isEmpty();
+        }
+    }
+    public static void main(String[] args){
+        System.out.println("Booking Request Queue:");
+        BookingRequestQueue bookingQueue=new BookingRequestQueue();
+        Reservation r1=new Reservation("Abhi","Single");
+        Reservation r2=new Reservation("Subha","Double");
+        Reservation r3=new Reservation("Vanmathi","Suite");
+        bookingQueue.addRequest(r1);
+        bookingQueue.addRequest(r2);
+        bookingQueue.addRequest(r3);
+        while(bookingQueue.haspendingRequests()){
+            Reservation current=bookingQueue.getnextRequest();
+            System.out.println("Processing booking for Guest: "+current.getGuestName()+",Room Type: "+current.getRoomType());
+        }
+
+    }
 }
